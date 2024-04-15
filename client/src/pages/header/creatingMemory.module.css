@@ -1,0 +1,8 @@
+.clearButton {
+  margin-left: unset !important;
+  background-color: red !important;
+}
+
+.clearButton:hover {
+  background-color: brown !important;
+}
