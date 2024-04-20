@@ -6,3 +6,9 @@
 .clearButton:hover {
   background-color: brown !important;
 }
+
+.creatingMemoryCard {
+  max-width: 500px;
+  max-height: 600px;
+  overflow-x: auto;
+}

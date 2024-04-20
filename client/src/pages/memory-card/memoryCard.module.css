@@ -1,0 +1,10 @@
+.memoryCard {
+  max-width: 350px; 
+  height: 450px;
+  border-radius: 1rem;
+}
+
+.memoryCardContent {
+  height: 130px;
+  overflow-x: auto;
+}

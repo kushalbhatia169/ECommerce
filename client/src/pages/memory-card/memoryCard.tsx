@@ -11,7 +11,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Delete, ThumbUp } from '@mui/icons-material';
 import testQuote from "../../images/textQuote.png";
 import styles from "./memoryCard.module.css";
-import { cardState } from './header';
+import { cardState } from '../../types/card-state.types';
 
 // interface ExpandMoreProps extends IconButtonProps {
 //   expand: boolean;
@@ -41,7 +41,7 @@ export const MemoryCard = (props: MemoryCardProps) => {
   console.log(props, createdAt);
 
   return (
-    <Card sx={{ maxWidth: 350, maxHeight: 450, borderRadius: "1rem" }}>
+    <Card className={styles.memoryCard}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="creatorName">
@@ -56,19 +56,20 @@ export const MemoryCard = (props: MemoryCardProps) => {
         className={styles.cardHeader}
         title={props?.card?.title}
         subheader={new Date(createdAt).toISOString().slice(0, 10)}
-      />
+      >
+      </CardHeader>
       <CardMedia
         component="img"
-        height="124"
+        height="200"
         image={testQuote}
         alt="Paella dish"
-      />
-      <CardContent>
+        />
+      <CardContent className={styles.memoryCardContent}>
         <Typography variant="body2" color="text.secondary">
           {props?.card?.message}
         </Typography>
       </CardContent>
-      <CardActions sx={{display:"flex", justifyContent:"space-between"}}>
+      <CardActions className="d-flex justify-content-between">
         <IconButton aria-label="Like">
           <ThumbUp /> {props?.card?.likeCount !== 0 ? props?.card?.likeCount : ""}
         </IconButton>

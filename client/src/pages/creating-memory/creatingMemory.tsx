@@ -9,6 +9,7 @@ import { useCallback, useRef, useState } from 'react';
 import styles from "./creatingMemory.module.css";
 import axios from 'axios';
 import { convertBase64 } from '../../helpers/getBlobFromFile';
+import { creatingMemoryProps } from '../../types/card-state.types';
 
 interface creatorMemoryState {
   creator: string;
@@ -52,7 +53,7 @@ const initialState = {
 //   }),
 // }));
 
-export const CreatingMemoryCard = () => {
+export const CreatingMemoryCard = (props: creatingMemoryProps) => {
   const [creatorMemoryState, setCreatorMemoryState] = useState<creatorMemoryState>(initialState);
   const [isAnyFieldEmpty, setIsAnyFieldEmpty] = useState(false);
   const [errorKey, setErrorKey] = useState<string[]>([]);
@@ -103,14 +104,15 @@ export const CreatingMemoryCard = () => {
       setIsAnyFieldEmpty(true);
     } else {
       axios.put("http://localhost:3000/posts/createPost", {
-        title: creatorMemoryState[fieldsToCheck[0] as keyof creatorMemoryState],
-        message: creatorMemoryState[fieldsToCheck[1] as keyof creatorMemoryState],
-        creator: creatorMemoryState[fieldsToCheck[2] as keyof creatorMemoryState],
+        title: creatorMemoryState[fieldsToCheck[1] as keyof creatorMemoryState],
+        message: creatorMemoryState[fieldsToCheck[2] as keyof creatorMemoryState],
+        creator: creatorMemoryState[fieldsToCheck[0] as keyof creatorMemoryState],
         tags: creatorMemoryState[fieldsToCheck[3] as keyof creatorMemoryState], 
         selectedFile: creatorMemoryState['file']
       })
       .then((res) => {
         if(res?.status === 200) {
+          props._setIsMounted(true);
           console.log(res.data.message);
         } else {
           throw new Error("Sorry your memory can not be saved");
@@ -150,7 +152,7 @@ export const CreatingMemoryCard = () => {
   }
 
   return (
-    <Card sx={{ maxWidth: 500, maxHeight: 600, overflowX: "auto" }}>
+    <Card className={styles.creatingMemoryCard}>
       <CardHeader
         title="Create a memory"
       />
@@ -213,7 +215,7 @@ export const CreatingMemoryCard = () => {
         <input type="file" className="mt-3" onChange={handleUploadFile}/>
       </CardContent>
       <hr className="ms-2 me-2"/>
-      <CardActions sx={{display:"flex", flexDirection:"column"}}>
+      <CardActions className="d-flex flex-column">
         <Button variant="contained" fullWidth onClick={handleSubmit}>Submit</Button>
         <Button variant="contained" fullWidth className={`mt-2 ${styles.clearButton}`} onClick={()=> {
           setIsAnyFieldEmpty(false);

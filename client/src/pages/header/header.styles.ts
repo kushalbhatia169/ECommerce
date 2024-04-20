@@ -16,9 +16,10 @@ export const useStyles =  makeStyles({
   appBar: {
     textAlign: "center",
     borderRadius: "2.5rem",
-    width: "85% !important",
+    width: "90% !important",
     backgroundColor: "azure !important",
     color: "rgba(0,183,255, 1) !important",
-    outline: "invert"
+    outline: "invert",
+    marginRight: "10px"
   }
 });
