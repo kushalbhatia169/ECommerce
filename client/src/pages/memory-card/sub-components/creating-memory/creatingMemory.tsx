@@ -8,7 +8,7 @@ import { red } from '@mui/material/colors';
 import { useCallback, useRef, useState } from 'react';
 import styles from "./creatingMemory.module.css";
 import axios from 'axios';
-import { convertBase64 } from '../../helpers/getBlobFromFile';
+import { convertBase64 } from '../../../../helpers/getBlobFromFile';
 import { creatingMemoryProps } from './types/creatingMemory.types';
 
 interface creatorMemoryState {

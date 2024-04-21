@@ -61,7 +61,7 @@ export const MemoryCard = (props: MemoryCardProps) => {
       <CardMedia
         component="img"
         height="200"
-        image={testQuote}
+        image={props.card.selectedFile || testQuote}
         alt="Paella dish"
         />
       <CardContent className={styles.memoryCardContent}>
