@@ -8,7 +8,3 @@ export interface cardState {
   createdAt: Date;
   _id: string;
 }
-
-export interface creatingMemoryProps {
-  _setIsMounted: React.Dispatch<React.SetStateAction<boolean>>
-}

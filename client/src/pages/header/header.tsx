@@ -4,12 +4,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import styles from "./header.module.css";
 import { Grid } from '@mui/material';
-import MemoryCard from '../memory-card/memoryCard';
+import MemoryCard from '../memory-card/sub-components/card';
 import { CreatingMemoryCard } from '../creating-memory/creatingMemory';
 import memories from "../../images/memories.png";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { cardState } from '../../types/card-state.types';
+import { cardState } from '../memory-card/types/memoryCard.types';
 
 export const Header = () => {
   const [cards, setCards] = useState<cardState[] | []>([]);
@@ -46,7 +46,7 @@ export const Header = () => {
     </Box>
     <Box padding={2} className={`mt-2 ${styles.boxCard}`}>
       <Grid container spacing={1} width={"90%"} className="d-flex justify-content-center">
-        <Grid xs={6} className="d-flex flex-wrap overflow-auto" maxHeight={600}>
+        <Grid xs={6} className="cardDivGrid d-flex flex-wrap overflow-auto" maxHeight={600}>
           { !_isMounted && cards.map((item ) => {
             return <Grid container spacing={1} width={330}>
               <Grid xs padding={1}>

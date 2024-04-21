@@ -9,9 +9,9 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Delete, ThumbUp } from '@mui/icons-material';
-import testQuote from "../../images/textQuote.png";
-import styles from "./memoryCard.module.css";
-import { cardState } from '../../types/card-state.types';
+import testQuote from "../../../images/textQuote.png";
+import styles from "../memoryCard.module.css";
+import { cardState } from '../types/memoryCard.types';
 
 // interface ExpandMoreProps extends IconButtonProps {
 //   expand: boolean;

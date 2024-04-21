@@ -22,3 +22,17 @@
   display: flex;
   justify-content: center;
 }
+
+.cardDivGrid::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.cardDivGrid::-webkit-scrollbar-track {
+  background: orange;        /* color of the tracking area */
+}
+
+.cardDivGrid::-webkit-scrollbar-thumb {
+  background-color: blue;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid orange;  /* creates padding around scroll thumb */
+}

@@ -9,7 +9,7 @@ import { useCallback, useRef, useState } from 'react';
 import styles from "./creatingMemory.module.css";
 import axios from 'axios';
 import { convertBase64 } from '../../helpers/getBlobFromFile';
-import { creatingMemoryProps } from '../../types/card-state.types';
+import { creatingMemoryProps } from './types/creatingMemory.types';
 
 interface creatorMemoryState {
   creator: string;

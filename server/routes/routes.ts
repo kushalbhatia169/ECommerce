@@ -6,5 +6,6 @@ const postActions = new PostActions();
 
 router.put("/createPost", postActions.createPost);
 router.get("/getPosts", postActions.getPosts);
+router.delete("/deletePost", postActions.deletePost);
 
 export default router;
