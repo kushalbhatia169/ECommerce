@@ -7,9 +7,10 @@ import { Button } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useCallback, useRef, useState } from 'react';
 import styles from "./creatingMemory.module.css";
-import axios from 'axios';
 import { convertBase64 } from '../../../../helpers/getBlobFromFile';
-import { creatingMemoryProps } from './types/creatingMemory.types';
+import { CREATE_POST } from '../../../../graphql/posts.query';
+import { useMutation } from '@apollo/react-hooks';
+// import { creatingMemoryProps } from '../../../../types/creatingMemory.types';
 
 interface creatorMemoryState {
   creator: string;
@@ -53,7 +54,7 @@ const initialState = {
 //   }),
 // }));
 
-export const CreatingMemoryCard = (props: creatingMemoryProps) => {
+export const CreatingMemoryCard = () => {
   const [creatorMemoryState, setCreatorMemoryState] = useState<creatorMemoryState>(initialState);
   const [isAnyFieldEmpty, setIsAnyFieldEmpty] = useState(false);
   const [errorKey, setErrorKey] = useState<string[]>([]);
@@ -86,6 +87,21 @@ export const CreatingMemoryCard = (props: creatingMemoryProps) => {
     }
   },[creatorMemoryState, errorKey]);
 
+  const [createPost] = useMutation(CREATE_POST,{
+    onCompleted({createPost}) {
+      const {err, msg} = createPost;
+      if(msg) {
+        console.log(msg);
+      }
+      if(err) {
+        console.error(err);
+      }
+    },
+    onError(error){
+      console.log("An Error Occured.", error.message);
+    }
+  });
+
   const handleSubmit = () => {
     const fieldsToCheck = ["creator", "title", "message", "tags"];
     let focusRef = null;
@@ -103,24 +119,15 @@ export const CreatingMemoryCard = (props: creatingMemoryProps) => {
       focusRef.current?.focus();
       setIsAnyFieldEmpty(true);
     } else {
-      axios.put("http://localhost:3000/posts/createPost", {
-        title: creatorMemoryState[fieldsToCheck[1] as keyof creatorMemoryState],
-        message: creatorMemoryState[fieldsToCheck[2] as keyof creatorMemoryState],
-        creator: creatorMemoryState[fieldsToCheck[0] as keyof creatorMemoryState],
-        tags: creatorMemoryState[fieldsToCheck[3] as keyof creatorMemoryState], 
-        selectedFile: creatorMemoryState['file']
-      })
-      .then((res) => {
-        if(res?.status === 200) {
-          props._setIsMounted(true);
-          console.log(res.data.message);
-        } else {
-          throw new Error("Sorry your memory can not be saved");
+      createPost({
+        variables : {
+          title: creatorMemoryState.title, 
+          message: creatorMemoryState.message,
+          tags: creatorMemoryState.tags,
+          selectedFile : creatorMemoryState.file,
+          creator: creatorMemoryState.creator
         }
       })
-      .catch((error) => {
-        console.warn(error);
-      });
     }
   };
 

@@ -11,7 +11,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Delete, ThumbUp } from '@mui/icons-material';
 import testQuote from "../../../images/textQuote.png";
 import styles from "../memoryCard.module.css";
-import { cardState } from '../types/memoryCard.types';
+import { cardState } from '../../../types/memoryCard.types';
 
 // interface ExpandMoreProps extends IconButtonProps {
 //   expand: boolean;
@@ -45,7 +45,7 @@ export const MemoryCard = (props: MemoryCardProps) => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="creatorName">
-            {props?.card?.title?.charAt(0)}
+            {props?.card?.creator?.charAt(0)}
           </Avatar>
         }
         action={
@@ -54,7 +54,7 @@ export const MemoryCard = (props: MemoryCardProps) => {
           </IconButton>
         }
         className={styles.cardHeader}
-        title={props?.card?.title}
+        title={props?.card?.creator}
         subheader={new Date(createdAt).toISOString().slice(0, 10)}
       >
       </CardHeader>
@@ -65,6 +65,9 @@ export const MemoryCard = (props: MemoryCardProps) => {
         alt="Paella dish"
         />
       <CardContent className={styles.memoryCardContent}>
+        <Typography variant="body2" color="text.primary">
+          {props?.card?.title}
+        </Typography>
         <Typography variant="body2" color="text.secondary">
           {props?.card?.message}
         </Typography>

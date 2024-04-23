@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface iPostSchema {
+export interface iPostSchema {
     title: string;
     message: string;
     creator: string;
@@ -8,6 +8,7 @@ interface iPostSchema {
     selectedFile: string;
     likeCount: number;
     createdAt: Date;
+    _id?: any;
 };
 
 

@@ -5,6 +5,9 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { connectToDatabase, disconnectFromDatabase } from './db';
 import router from './routes/routes';
+import { ApolloServer } from 'apollo-server';
+import { typeDefs } from './schema';
+import { Resolvers as resolvers } from './resolver/index';
 
 const app = express();
 const port = 3000;
@@ -18,15 +21,24 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(helmet());
-app.use('/posts', router);
+
+const server = new ApolloServer({
+  cors: true,
+  typeDefs,
+  resolvers,
+})
+
+//server.applyMiddleware({ app });
+//app.use('/posts', router);
 
 async function startApplication() {
   try {
     await connectToDatabase();
     // Application logic here
-    app.listen(port, () => {
+    server.listen(port, () => {
       return console.log(`Express is listening at http://localhost:${port}`);
     });
+    
   } catch (error) {
     console.error("Failed to start application:", error);
     // Gracefully handle the failure to connect to the database
