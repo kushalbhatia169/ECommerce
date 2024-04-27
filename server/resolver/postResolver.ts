@@ -45,20 +45,50 @@ export const PostsResolver = {
 
   deletePost: async (parent: unknown, args: any) => {
     try{
-        //const {id} = jwt.verify(args.token,jwtSecret.secret);
-      await Post.findByIdAndDelete(args.id).then(() => {
+      //const {id} = jwt.verify(args.token,jwtSecret.secret);
+      return await Post.findByIdAndDelete(args.id).then(() => {
         return {
-          message: true
+          err : false,
+          msg : "Post deleted successfully."
         }
       })
       .catch(err => {
         throw new Error(err);
       });
-    }catch(error){
-        return ({
-          err : true,
-          msg : "Cound not delete the post."
-        })
+    } catch(error){
+      return ({
+        err : true,
+        msg : "Cound not delete the post."
+      })
+    }
+  },
+
+  reactPost: async(parent: unknown, args: any) => {
+    try {
+      return await Post.findOne(args.id).then(async (post) => {
+
+        if(post) {
+
+          if(args.type === "INCREMENT") {
+            post.likeCount = post.likeCount + 1;
+          } else if(post.likeCount > 0 && args.type === "DECREMENT"){
+            post.likeCount = post.likeCount - 1;
+          }
+          await post?.save();
+
+          return {
+            err : false,
+            msg : "Post liked successfully."
+          } 
+        } else {
+          throw new Error("Post not liked successfully.");
+        }
+      })
+    } catch (error) {
+      return ({
+        err: true,
+        msg: "Could not like post"
+      });
     }
   }
 

@@ -7,7 +7,8 @@ export const Resolvers = {
   },
   Mutation: {
     createPost: PostsResolver.createPost,
-    deletePost: PostsResolver.deletePost
+    deletePost: PostsResolver.deletePost,
+    reactPost: PostsResolver.reactPost
   },
   Date : dateScalar
 }

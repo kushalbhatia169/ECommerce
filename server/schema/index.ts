@@ -34,6 +34,8 @@ export const typeDefs = gql`
   type Mutation{
     createPost(title: String!, creator: String!, message: String!, tags: [String], selectedFile : String): Response!, 
     deletePost(id: ID!): Response!
+    likePost(id: ID!): Response!
+    reactPost(id: ID!, type: String!): Response!
   }
 `
 

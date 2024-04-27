@@ -6,5 +6,5 @@ export interface cardState {
   selectedFile: string;
   likeCount: number;
   createdAt: Date;
-  _id: string;
+  id: string;
 }

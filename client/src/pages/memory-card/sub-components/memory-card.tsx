@@ -12,6 +12,8 @@ import { Delete, ThumbUp } from '@mui/icons-material';
 import testQuote from "../../../images/textQuote.png";
 import styles from "../memoryCard.module.css";
 import { cardState } from '../../../types/memoryCard.types';
+import { DELETE_POST } from '../../../graphql/posts.query';
+import { useMutation } from '@apollo/client';
 
 // interface ExpandMoreProps extends IconButtonProps {
 //   expand: boolean;
@@ -29,6 +31,7 @@ import { cardState } from '../../../types/memoryCard.types';
 // }));
 interface MemoryCardProps {
   card: cardState;
+  setPollingOnAction: () => void;
 }
 
 export const MemoryCard = (props: MemoryCardProps) => {
@@ -39,6 +42,21 @@ export const MemoryCard = (props: MemoryCardProps) => {
   // };
   const {createdAt} = props.card;
   console.log(props, createdAt);
+  const [deletePost] = useMutation(DELETE_POST,{
+    onCompleted({deletePost}){
+        const {err, msg} = deletePost;
+        if(msg) {
+          props.setPollingOnAction();
+          console.log(msg);
+        }
+        if(err) {
+          console.error(err);
+        }
+    },
+    onError(error){
+        console.log("An Error Occured.", error)
+    }
+});
 
   return (
     <Card className={styles.memoryCard}>
@@ -76,7 +94,13 @@ export const MemoryCard = (props: MemoryCardProps) => {
         <IconButton aria-label="Like">
           <ThumbUp /> {props?.card?.likeCount !== 0 ? props?.card?.likeCount : ""}
         </IconButton>
-        <IconButton aria-label="Delete">
+        <IconButton aria-label="Delete" onClick={() => {
+          deletePost({
+            variables : {
+              id: props.card.id
+            }
+          })
+        }}>
           <Delete />
         </IconButton>
       </CardActions>
